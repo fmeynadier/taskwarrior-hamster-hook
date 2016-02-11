@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+""" This on-modify hook stores uses hamster-cli as a timetracking tool
+Seems to work with hamster 2.91.3 (standard in ubuntu 15.10)
+TW "projects" translated to Hamster "Category"
+TW "tags" translated to Hamster "tags"
+"""
+
+import sys
+import json
+import subprocess
+
+old_task = json.loads(sys.stdin.readline())
+mod_task = json.loads(sys.stdin.readline())
+
+desc = old_task["description"]
+if "project" in old_task:
+    proj = old_task["project"]
+if "tags" in old_task:
+    tags = old_task["tags"]
+
+hamster_cli = "hamster-cli"
+
+# "start" command used
+if ('start' not in old_task and 'start' in mod_task):
+    cmd_arg = '{}'.format(desc)
+    if proj:
+        cmd_arg += '@{}'.format(proj)
+    if tags:
+        cmd_arg += ", "
+        for t in tags:
+            cmd_arg += "#{} ".format(t)
+    subprocess.call([hamster_cli,
+                     "start",
+                     cmd_arg])
+
+# "stop" command used
+if ('start' in old_task and 'start' not in mod_task):
+    subprocess.call([hamster_cli,
+                     "stop"])
+
+print(json.dumps(mod_task))
+sys.exit(0)
