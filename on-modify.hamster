@@ -12,6 +12,9 @@ import subprocess
 old_task = json.loads(sys.stdin.readline())
 mod_task = json.loads(sys.stdin.readline())
 
+proj = None
+tags = None
+
 desc = old_task["description"]
 if "project" in old_task:
     proj = old_task["project"]
