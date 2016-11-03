@@ -8,6 +8,7 @@ TW "tags" translated to Hamster "tags"
 import sys
 import json
 import subprocess
+import shutil
 
 old_task = json.loads(sys.stdin.readline())
 mod_task = json.loads(sys.stdin.readline())
@@ -21,7 +22,16 @@ if "project" in old_task:
 if "tags" in old_task:
     tags = old_task["tags"]
 
-hamster_cli = "hamster-cli"
+# Ubuntu, Debian
+hamster_cli = shutil.which("hamster-cli")
+if not hamster_cli:
+    # Fedora
+    hamster_cli = shutil.which("hamster")
+if not hamster_cli:
+    # No executable found, exiting
+    print("on-modify.hamster hook : "
+          "No executable found for hamster-cli. Exiting")
+    sys.exit(1)
 
 # "start" command used
 if ('start' not in old_task and 'start' in mod_task):
