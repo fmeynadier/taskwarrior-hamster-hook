@@ -33,15 +33,20 @@ if not hamster_cli:
           "No executable found for hamster-cli. Exiting")
     sys.exit(1)
 
+
+def hamster_specialchars(input_str):
+    # Escape hamster-cli special chars, there doesn't seem to be a better way
+    return input_str.replace("#", "_").replace("@", "_")
+
 # "start" command used
 if ('start' not in old_task and 'start' in mod_task):
-    cmd_arg = '{}'.format(desc)
+    cmd_arg = '{}'.format(hamster_specialchars(desc))
     if proj:
-        cmd_arg += '@{}'.format(proj)
+        cmd_arg += '@{}'.format(hamster_specialchars(proj))
     if tags:
-        cmd_arg += ", "
+        cmd_arg += ', '
         for t in tags:
-            cmd_arg += "#{} ".format(t)
+            cmd_arg += '#{} '.format(hamster_specialchars(t))
     subprocess.call([hamster_cli,
                      "start",
                      cmd_arg])
