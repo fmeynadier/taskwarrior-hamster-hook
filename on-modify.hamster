@@ -35,7 +35,8 @@ if not hamster_cli:
 
 # "start" command used
 if ('start' not in old_task and 'start' in mod_task):
-    cmd_arg = '{}'.format(desc)
+    # replace # symbol in description
+    cmd_arg = '{}'.format(desc.replace('#', '_'))
     if proj:
         cmd_arg += '@{}'.format(proj)
     if tags:
