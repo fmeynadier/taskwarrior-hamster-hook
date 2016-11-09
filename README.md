@@ -4,8 +4,8 @@ A minimal hook for TaskWarrior to help tracking time with hamster-cli
 ## Prerequisites
 
 - Taskwarrior (>= 2.4)
-- hamster-cli (>= 2.91.3)
-- python
+- <code>hamster-cli</code> (>= 2.91.3) (<code>hamster</code> in fedora)
+- python (>= 3.3)
 
 ## Installation
 
@@ -20,5 +20,5 @@ If a "start" is detected, hook will call "hamster-cli start [Task description]@[
 
 If a "stop" is detected, hook will call "hamster-cli stop" (effectively stopping any task currently active in hamster).
 
-
+The '#' and '@' characters within any field (description, project, tags) are replaced by '\_' in order to avoid incorrect parsing.
 
