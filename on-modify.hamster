@@ -3,6 +3,7 @@
 Seems to work with hamster 2.91.3 (standard in ubuntu 15.10)
 TW "projects" translated to Hamster "Category"
 TW "tags" translated to Hamster "tags"
+# and @ are replaced by _ to avoid parsing errors
 """
 
 import sys
